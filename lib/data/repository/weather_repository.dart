@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
-import 'dart:js_interop';
+
 
 import 'package:weatherapp/data/data_provider/weather_data_provider.dart';
 import 'package:weatherapp/models/weather_model.dart';
@@ -10,21 +10,23 @@ class WeatherRepository {
   WeatherRepository({
     required this.weatherDataProvider,
   });
-  Future<WeatherModel> getCurrentWeather() async {
+  Future<WeatherModel> getCurrentWeather(String cityName) async {
     try {
-      String cityName = "New Delhi";
+     // String cityName = "Chennai";
 
       final weatherData = await weatherDataProvider.getCurrentWeather(cityName);
+      // print(weatherData);
 
-      final data = jsonDecode(weatherData);
-      // print(data);
-      if (data["cod"] != 200) {
+      final data = json.decode(weatherData);
+      print("data $data");
+      if (data["cod"] != "200") {
         throw "An unexpected error occurred";
       }
-      //print(data);
+      // final k = WeatherModel.fromJson(data);
+      // print("weather $k");
       return WeatherModel.fromJson(data);
     } catch (e) {
-      //print("error ");
+      print("${e.toString()}");
       throw e.toString();
     }
   }

@@ -1,3 +1,5 @@
+//weather_state.dart
+
 part of 'weather_bloc.dart';
 
 @immutable
@@ -7,8 +9,9 @@ final class WeatherInitial extends WeatherState {}
 
 final class WeatherSuccess extends WeatherState {
   final WeatherModel weatherModel;
+  final String cityName;
 
-  WeatherSuccess({required this.weatherModel});
+  WeatherSuccess(this.cityName, {required this.weatherModel});
 }
 
 final class WeatherFailure extends WeatherState {

@@ -1,3 +1,5 @@
+//weather_block.dart
+
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,16 +15,17 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   WeatherBloc(
     this.weatherRepository,
   ) : super(WeatherInitial()) {
-    on<WeatherFetched>(_getCurrentWeather);
+    on<WeatherFetched>(_getCurrentWeather );
   }
 
-  void _getCurrentWeather(
-      WeatherEvent event, Emitter<WeatherState> emit) async {
-    // emit(WeatherLoading());
+   _getCurrentWeather(
+      WeatherFetched event, Emitter<WeatherState> emit) async {
+    emit(WeatherLoading());
+    
     try {
-      final weather = await weatherRepository.getCurrentWeather();
+      final weather = await weatherRepository.getCurrentWeather(event.cityName);
       print("fteched");
-      emit(WeatherSuccess(weatherModel: weather));
+      emit(WeatherSuccess(weatherModel: weather,event.cityName));
     } catch (e) {
       emit(WeatherFailure(e.toString()));
     }
